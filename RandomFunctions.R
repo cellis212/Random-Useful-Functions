@@ -1,10 +1,19 @@
-require(plm)
-require(lmtest)
-require(lfe)
-require(stargazer)
-require(multiwayvcov)
-require(sandwich)
-require(DataExplorer)
+###### Loading libraries ########
+# List of packages for session
+.packages = c("plm", 
+              "lmtest",
+              "lfe",
+              "stargazer",
+              "multiwayvcov",
+              "sandwich",
+              "DataExplorer")
+
+# Install CRAN packages (if not already installed)
+.inst <- .packages %in% installed.packages()
+if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
+
+# Load packages into session 
+lapply(.packages, require, character.only = TRUE)
 
 # Felm corrected when fes are nested in clusters
 felmNest <- function(form, data, ...)
