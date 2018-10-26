@@ -79,7 +79,7 @@ config <- list(
   "plot_scatterplot" = list()
 )
 
-#Tic/toc functionality
+# Tic/toc functionality
 tic <- function(gcFirst = TRUE, type=c("elapsed", "user.self", "sys.self"))
 {
   type <- match.arg(type)
@@ -100,3 +100,9 @@ toc <- function()
   print(toc - tic)
   invisible(toc)
 }
+
+# Add the following code to TexStudio options/build
+# user commands to allow for .Rnw files
+# "Rscript.exe" -e  "knitr::knit2pdf('%.Rnw')" | pdflatex -synctex=1 -interaction=nonstopmode %.tex | txs:///view-pdf
+
+
