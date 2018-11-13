@@ -3,11 +3,12 @@
 .packages = c("plm", 
               "lmtest",
               "lfe",
-              "stargazer",
               "multiwayvcov",
               "sandwich",
               "DataExplorer",
-              "stringr")
+              "stringr",
+              "devtools")
+
 
 # Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
@@ -15,6 +16,10 @@ if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
 
 # Load packages into session 
 lapply(.packages, require, character.only = TRUE)
+
+# Version of stargazer with booktabs
+install_github("markwestcott34/stargazer-booktabs")
+require(stargazer)
 
 ##### Felm corrected when fes are nested in clusters #######
 felmNest <- function(form, data, ...)
@@ -111,7 +116,7 @@ toc <- function()
 fixStargazer <- function(tab, nmodels, scalesize = .8)
 {
   # tab should be a character vector of captured output from stargazer
-  
+  # this version requires you to use booktabs in your preamble of your tex doc
   # adding a scalebox
   scaleChar <- paste(paste("\\scalebox{", scalesize, sep = ""), "}{", sep = "")
   a <- sub("\\begin{tabular}", paste(scaleChar, "\\begin{tabular}", sep = ""), tab, fixed = TRUE)
