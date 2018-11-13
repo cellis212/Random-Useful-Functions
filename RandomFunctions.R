@@ -118,14 +118,14 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   # tab should be a character vector of captured output from stargazer
   # this version requires you to use booktabs in your preamble of your tex doc
   # adding a scalebox
-  scaleChar <- paste(paste("\\scalebox{", scalesize, sep = ""), "}{", sep = "")
+  scaleChar <- paste("\\scalebox{", scalesize, "}{", sep = "")
   a <- sub("\\begin{tabular}", paste(scaleChar, "\\begin{tabular}", sep = ""), tab, fixed = TRUE)
   b <- sub("\\end{tabular}", "\\end{tabular}}", a, fixed = TRUE)
   
   # making the notes go across the table
-  noteChar <- paste(paste(" & \\multicolumn{", nmodels + 1, sep = ""), "}{l}{\\parbox", sep = "")
-  
-  c <- sub(" & \\multicolumn{1}{l}{\\parbox",  noteChar, b, fixed = TRUE)
+  noteChar <- paste("\\multicolumn{", nmodels + 1, "}{l}{\\parbox", sep = "")
+  patChar <- paste(" & \\multicolumn{", nmodels, "}{l}{\\parbox", sep = "")
+  c <- sub(patChar,  noteChar, b, fixed = TRUE)
   
   # dropping the comment at the top
   c[2:4] <- ""
