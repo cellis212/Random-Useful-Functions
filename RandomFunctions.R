@@ -6,7 +6,8 @@
               "stargazer",
               "multiwayvcov",
               "sandwich",
-              "DataExplorer")
+              "DataExplorer",
+              "stringr")
 
 # Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
@@ -112,19 +113,19 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   # tab should be a character vector of captured output from stargazer
   
   # adding a scalebox
-  scaleCat <- paste(paste("\\\\scalebox{", scalesize, sep = ""), "}{", sep = "")
-  a <- sub("\\\\begin{tabular}", paste(scalecat, "\\\\begin{tabular}", sep = ""), tab)
-  b <- sub("\\\\end{tabular}", "\\\\end{tabular}}", a)
+  scaleChar <- paste(paste("\\scalebox{", scalesize, sep = ""), "}{", sep = "")
+  a <- sub("\\begin{tabular}", paste(scaleChar, "\\begin{tabular}", sep = ""), tab, fixed = TRUE)
+  b <- sub("\\end{tabular}", "\\end{tabular}}", a, fixed = TRUE)
   
   # making the notes go across the table
-  noteCat <- paste(paste(" & \\\\multicolumn{", nmodels + 1, sep = ""), "}{l}{\\\\parbox", sep = "")
+  noteChar <- paste(paste(" & \\multicolumn{", nmodels + 1, sep = ""), "}{l}{\\parbox", sep = "")
   
-  c <- sub(" & \\\\multicolumn{1}{l}{\\\\parbox", noteCat, b)
+  c <- sub(" & \\multicolumn{1}{l}{\\parbox",  noteChar, b, fixed = TRUE)
   
   # printing output
   cat(c)
 }
-  
+
   
 
 
