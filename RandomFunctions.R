@@ -15,7 +15,7 @@ if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
 # Load packages into session 
 lapply(.packages, require, character.only = TRUE)
 
-# Felm corrected when fes are nested in clusters
+##### Felm corrected when fes are nested in clusters #######
 felmNest <- function(form, data, ...)
 {
   m <- felm(form, data, exactDOF = TRUE, keepCX = TRUE)
@@ -31,7 +31,7 @@ felmNest <- function(form, data, ...)
   return(m)
 }
 
-# The following are for rounding for table creation
+####### Rounding for table creation #######
 meanPr <- function(data, digits = 3)
 {
   m <- mean(data, na.rm = TRUE)
@@ -56,14 +56,14 @@ difPr <- function(var1, var2, digits = 2)
   return(formatC(m, digits = digits, format = "f"))
 }
 
-# Get the mode of a data set
+##### Get the mode of a data set #######
 getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 
-# Better config for DataExplorer
-config <- list(
+###### Better config for DataExplorer #######
+dconfig <- list(
   "introduce" = list(),
   "plot_str" = list(
     "type" = "diagonal",
@@ -79,7 +79,7 @@ config <- list(
   "plot_scatterplot" = list()
 )
 
-# Tic/toc functionality
+####### Tic/toc functionality ########
 tic <- function(gcFirst = TRUE, type=c("elapsed", "user.self", "sys.self"))
 {
   type <- match.arg(type)
@@ -101,8 +101,47 @@ toc <- function()
   invisible(toc)
 }
 
-# Add the following code to TexStudio options/build
+####### Add the following code to TexStudio options/build  ########
 # user commands to allow for .Rnw files
 # "Rscript.exe" -e  "knitr::knit2pdf('%.Rnw')" | pdflatex -synctex=1 -interaction=nonstopmode %.tex | txs:///view-pdf
+
+
+####### Add scalebox and fix notes in stargazer ########
+fixStargazer <- function(tab, nmodels, scalesize = .8)
+{
+  # tab should be a character vector of captured output from stargazer
+  
+  # adding a scalebox
+  scaleCat <- paste(paste("\\\\scalebox{", scalesize, sep = ""), "}{", sep = "")
+  a <- sub("\\\\begin{tabular}", paste(scalecat, "\\\\begin{tabular}", sep = ""), tab)
+  b <- sub("\\\\end{tabular}", "\\\\end{tabular}}", a)
+  
+  # making the notes go across the table
+  noteCat <- paste(paste(" & \\\\multicolumn{", nmodels + 1, sep = ""), "}{l}{\\\\parbox", sep = "")
+  
+  c <- sub(" & \\\\multicolumn{1}{l}{\\\\parbox", noteCat, b)
+  
+  # printing output
+  cat(c)
+}
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
