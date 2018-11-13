@@ -123,7 +123,7 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   b <- sub("\\end{tabular}", "\\end{tabular}}", a, fixed = TRUE)
   
   # making the notes go across the table
-  noteChar <- paste(paste(" & \\multicolumn{", nmodels + 1, sep = ""), "}{l}{\\parbox", sep = "")
+  noteChar <- paste(paste("\\multicolumn{", nmodels + 1, sep = ""), "}{l}{\\parbox", sep = "")
   
   c <- sub(" & \\multicolumn{1}{l}{\\parbox",  noteChar, b, fixed = TRUE)
   
