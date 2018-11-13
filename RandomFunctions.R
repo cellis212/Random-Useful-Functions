@@ -127,6 +127,8 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   
   c <- sub(" & \\multicolumn{1}{l}{\\parbox",  noteChar, b, fixed = TRUE)
   
+  # dropping the comment at the top
+  c[2:4] <- ""
   # printing output
   cat(c)
 }
