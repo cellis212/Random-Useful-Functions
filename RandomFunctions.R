@@ -126,6 +126,7 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   noteChar <- paste("\\multicolumn{", nmodels + 1, "}{l}{\\parbox", sep = "")
   patChar <- paste(" & \\multicolumn{", nmodels, "}{l}{\\parbox", sep = "")
   c <- sub(patChar,  noteChar, b, fixed = TRUE)
+
   
   # dropping the comment at the top
   c[2:4] <- ""
