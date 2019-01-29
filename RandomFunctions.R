@@ -69,6 +69,7 @@ getmode <- function(v) {
 }
 
 ###### Better config for DataExplorer #######
+# create_report(data, y = "", config = dconfig)
 dconfig <- list(
   "introduce" = list(),
   "plot_str" = list(
