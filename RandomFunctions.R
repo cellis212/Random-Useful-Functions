@@ -9,13 +9,18 @@
               "stringr",
               "devtools")
 
-
 # Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
 if(length(.packages[!.inst]) > 0) install.packages(.packages[!.inst])
 
 # Load packages into session 
 lapply(.packages, require, character.only = TRUE)
+
+
+#### Options I Like ####
+options(dplyr.width = Inf) # Makes dplyr show all columns in commands like head
+options(stringsAsFactors = FALSE) # loads string variables as strings instead of factors
+
 
 # Version of stargazer with booktabs
 install_github("markwestcott34/stargazer-booktabs")
@@ -137,6 +142,8 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
 
   
 #### Fix the weird unlabeled dataset problem ####
+# This is also fixed by loading the packages in the order from the master file
+# The problem occurs when you load HMisc and tidyverse in the wrong order
 labelDataset <- function(data) {
   correctLabel <- function(x) {
     
