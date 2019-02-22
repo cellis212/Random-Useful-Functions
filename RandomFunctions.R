@@ -159,6 +159,11 @@ labelDataset <- function(data) {
 }
 
 
+# twoSampleSumStats <- function(data, treatvar, varnames)
+# {
+#   tab <- c()
+#   tab[1] <- "
+
 
 
 
