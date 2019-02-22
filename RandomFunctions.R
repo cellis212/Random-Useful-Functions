@@ -39,6 +39,8 @@ felmNest <- function(form, data, ...)
   m$cse <- ses[2:nrow(ses),2]
   m$ctval <- ses[2:nrow(ses),3]
   m$cpval <- ses[2:nrow(ses),4]
+  m$cY <- NULL
+  m$cX <- NULL
   return(m)
 }
 
