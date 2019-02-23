@@ -45,28 +45,37 @@ felmNest <- function(form, data, ...)
 }
 
 ####### Rounding for table creation #######
+# Mean
 meanPr <- function(data, digits = 3)
 {
   m <- mean(data, na.rm = TRUE)
   return(formatC(m, digits = digits, format = "f"))
 }
 
+# Standard Deviation
 sdPr <- function(data, digits = 3)
 {
   m <- sd(data, na.rm = TRUE)
   return(formatC(m, digits = digits, format = "f"))
 }
 
+# T-test for difference in means
 tdif <- function(var1, var2, digits = 2)
 {
   m <- t.test(var1, var2)
   return(formatC(m$statistic, digits = digits, format = "f"))
 }
 
+# Difference in means
 difPr <- function(var1, var2, digits = 2)
 {
   m <- mean(var1, na.rm = TRUE) - mean(var2, na.rm = TRUE)
   return(formatC(m, digits = digits, format = "f"))
+}
+
+# Within R-squared for FELM
+WR2 <- function(model, digits = 3){
+return(round(summary(model)$P.r.squared, digits = digits))
 }
 
 ##### Get the mode of a data set #######
