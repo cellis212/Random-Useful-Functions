@@ -147,8 +147,8 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   
   # dropping the comment at the top
   c[2:4] <- ""
-  # printing output
-  cat(c)
+  # printing output (if trunctated, go to RStudiio Options, Code, Display, and set the number at the bottom higher.
+  cat(c, fill = TRUE)
 }
 
   
