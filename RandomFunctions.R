@@ -147,8 +147,11 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   
   # dropping the comment at the top
   d[2:4] <- ""
+  
+  # getting line endings
+  d <- gsub("\\\\", "\\\\ \n", d, fixed = TRUE)
   # printing output (if trunctated, go to RStudiio Options, Code, Display, and set the number at the bottom higher.
-  cat(d, fill = min(getOption("width"), max(nchar(d))))
+  cat(d, fill = FALSE, sep = "")
 }
 
   
