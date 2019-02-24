@@ -142,13 +142,13 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   # making the notes go across the table
   noteChar <- paste("\\multicolumn{", nmodels + 1, "}{l}{\\parbox", sep = "")
   patChar <- paste(" & \\multicolumn{", nmodels, "}{l}{\\parbox", sep = "")
-  c <- sub(patChar,  noteChar, b, fixed = TRUE)
+  d <- sub(patChar,  noteChar, b, fixed = TRUE)
 
   
   # dropping the comment at the top
-  c[2:4] <- ""
+  d[2:4] <- ""
   # printing output (if trunctated, go to RStudiio Options, Code, Display, and set the number at the bottom higher.
-  cat(c, fill = TRUE)
+  cat(d, fill = min(getOption("width"), max(nchar(d))))
 }
 
   
