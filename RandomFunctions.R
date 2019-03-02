@@ -206,13 +206,13 @@ twoSampleSumStats <- function(data,
   tab[1] <- paste0("\\begin{table}[h!] \\centering \n")
   tab[2] <- paste0("\\caption{",caption,"} \n")
   tab[3] <- paste0("\\label{",label,"} \n")
-  tab[4] <- paste0("\\scalebox{", scale, "}{\\begin{tabular}{@{\\extracolsep{2pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3}} \n")
+  tab[4] <- paste0("\\scalebox{", scale, "}{\\begin{tabular}{@{\\extracolsep{2pt}}lD{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3}} \n")
   tab[5] <- paste0("\\hline \n")
   tab[6] <- paste0("\\\\[0.5mm] \n")
-  tab[7] <- paste0("Variable & \\multicolumn{2}{c}{Full Sample:} & \\multicolumn{2}{c}{",treatcolname,":} & \\multicolumn{2}{c}{",nontreatcolname,":}  & \\multicolumn{1}{c}{Diff. Means:}\\\\ \n")
+  tab[7] <- paste0("Variable & \\multicolumn{2}{c}{Full Sample:} & \\multicolumn{2}{c}{",treatcolname,":} & \\multicolumn{2}{c}{",nontreatcolname,":}  & \\multicolumn{2}{c}{Diff. Means:}\\\\ \n")
   tab[8] <- paste0("\\cmidrule{2-3} \\cmidrule{4-5} \\cmidrule{6-7} \\cmidrule{8-8} \n")
   tab[9] <- paste0("\\\\[-1.8ex] \n")
-  tab[10]<- paste0("& \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{t}\\\\ \n")
+  tab[10]<- paste0("& \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Diff.} &\\multicolumn{1}{c}{t}\\\\ \n")
   tab[11]<- paste0("\\hline \\\\[-1.8ex] \n")
   
   row = length(tab)
@@ -224,17 +224,18 @@ twoSampleSumStats <- function(data,
     ts  <- sdPr(treatdata[[i]])
     ntm <- meanPr(nontreatdata[[i]])
     nts <- sdPr(nontreatdata[[i]])
+    d <- formatC((tm-ntm), digits = digits, format = "f")
     dm  <- tdif(treatdata[[i]], nontreatdata[[i]])
     
     row <- row + 1
-    tab[row] <- paste(fancyvarnames[i],"&",fm,"&",fs,"&",tm,"&",ts,"&",ntm,"&",nts,"&",dm,"\\\\ \n")
+    tab[row] <- paste(fancyvarnames[i],"&",fm,"&",fs,"&",tm,"&",ts,"&",ntm,"&",nts,"&",d, "&", dm,"\\\\ \n")
   }
   
   # bottom
-  tab[row+1] <- paste0("N & \\multicolumn{2}{c}{",nrow(data),"} & \\multicolumn{2}{c}{",nrow(treatdata),"} & \\multicolumn{2}{c}{",nrow(nontreatdata),"} & \\multicolumn{1}{c}{-} \\\\ \n")
+  tab[row+1] <- paste0("N & \\multicolumn{2}{c}{",nrow(data),"} & \\multicolumn{2}{c}{",nrow(treatdata),"} & \\multicolumn{2}{c}{",nrow(nontreatdata),"} & \\multicolumn{2}{c}{-} \\\\ \n")
   tab[row+2] <- paste0("\\hline \\\\[-1.8ex] \n")
   if (note != "") {
-    tab[row+3] <- paste0("\\multicolumn{8}{l}{\\parbox[t]{",parbox,"}{\\textbf{Note:}",note,"}} \\\\ \n")
+    tab[row+3] <- paste0("\\multicolumn{9}{l}{\\parbox[t]{",parbox,"}{\\textbf{Note:}",note,"}} \\\\ \n")
   }  else {
     tab[row+3] <- paste0(" \n")
   }
