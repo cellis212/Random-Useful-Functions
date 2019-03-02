@@ -174,7 +174,16 @@ labelDataset <- function(data) {
 
 
 #### Produce a well-labeled table for sum stats of a treated and non-treated sample ####
-twoSampleSumStats <- function(data, treatvar, varnames, fancyvarnames, caption, label, note, treatcolname = "Treated", nontreatcolname = "Not Treated", scale = 1)
+twoSampleSumStats <- function(data, 
+                              treatvar, 
+                              varnames, 
+                              fancyvarnames, 
+                              caption = "", 
+                              label = "", 
+                              note = "", 
+                              treatcolname = "Treated",
+                              nontreatcolname = "Not Treated", 
+                              scale = 1)
 {
   # need to add a way to order the variables like varname orders them.
   # need to add a version that works for beamer (dropping cmidrule).
