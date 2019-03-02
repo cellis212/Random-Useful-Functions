@@ -228,7 +228,7 @@ twoSampleSumStats <- function(data,
     dm  <- tdif(treatdata[[i]], nontreatdata[[i]])
     
     row <- row + 1
-    tab[row] <- paste(fancyvarnames[i],"&",fm,"&",fs,"&",tm,"&",ts,"&",ntm,"&",nts,"&",d, "&", dm,"\\\\ \n")
+    tab[row] <- paste(fancyvarnames[i],"&",fm,"&",fs,"&",tm,"&",ts,"&",ntm,"&",nts,"&",d,"&", dm,"\\\\ \n")
   }
   
   # bottom
