@@ -210,7 +210,7 @@ twoSampleSumStats <- function(data,
   tab[5] <- paste0("\\hline \n")
   tab[6] <- paste0("\\\\[0.5mm] \n")
   tab[7] <- paste0("Variable & \\multicolumn{2}{c}{Full Sample:} & \\multicolumn{2}{c}{",treatcolname,":} & \\multicolumn{2}{c}{",nontreatcolname,":}  & \\multicolumn{2}{c}{Diff. Means:}\\\\ \n")
-  tab[8] <- paste0("\\cmidrule{2-3} \\cmidrule{4-5} \\cmidrule{6-7} \\cmidrule{8-8} \n")
+  tab[8] <- paste0("\\cmidrule{2-3} \\cmidrule{4-5} \\cmidrule{6-7} \\cmidrule{8-9} \n")
   tab[9] <- paste0("\\\\[-1.8ex] \n")
   tab[10]<- paste0("& \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Mean} & \\multicolumn{1}{c}{St. Dev.} & \\multicolumn{1}{c}{Diff.} &\\multicolumn{1}{c}{t}\\\\ \n")
   tab[11]<- paste0("\\hline \\\\[-1.8ex] \n")
