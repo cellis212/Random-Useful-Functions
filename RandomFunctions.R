@@ -62,6 +62,7 @@ sdPr <- function(data, digits = 3)
 # T-test for difference in means
 tdif <- function(var1, var2, digits = 3)
 {
+  # Come back and add stars
   m <- t.test(var1, var2)
   return(formatC(m$statistic, digits = digits, format = "f"))
 }
@@ -183,7 +184,8 @@ twoSampleSumStats <- function(data,
                               note = "", 
                               treatcolname = "Treated",
                               nontreatcolname = "Not Treated", 
-                              scale = 1)
+                              scale = 1,
+                              parbox = "21cm")
 {
   # need to add a way to order the variables like varname orders them.
   # need to add a version that works for beamer (dropping cmidrule).
@@ -232,7 +234,7 @@ twoSampleSumStats <- function(data,
   tab[row+1] <- paste0("N & \\multicolumn{2}{c}{",nrow(data),"} & \\multicolumn{2}{c}{",nrow(treatdata),"} & \\multicolumn{2}{c}{",nrow(nontreatdata),"} & \\multicolumn{1}{c}{-} \\\\ \n")
   tab[row+2] <- paste0("\\hline \\\\[-1.8ex] \n")
   if (note != "") {
-    tab[row+3] <- paste0("\\multicolumn{8}{l}{\\parbox[t]{20cm}{\\textbf{Note:}",note,"}} \\\\ \n")
+    tab[row+3] <- paste0("\\multicolumn{8}{l}{\\parbox[t]{",parbox,"}{\\textbf{Note:}",note,"}} \\\\ \n")
   }  else {
     tab[row+3] <- paste0(" \n")
   }
