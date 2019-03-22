@@ -247,6 +247,13 @@ twoSampleSumStats <- function(data,
 }
 
 
+#### Function to make FELM formula from strings ####
+felmForm <- function(y, treat, x, fes = 0, inst = 0, clus = 0)
+{
+  form <- paste(y, "~", paste(treat, collapse = "+"), "+", paste(x, collapse = " + "), "|", paste(fes, collapse = " + "), "|", inst, "|", paste(clus, collapse = " + "))
+  form <- as.formula(form)
+  return(form)
+}
 
 
 
