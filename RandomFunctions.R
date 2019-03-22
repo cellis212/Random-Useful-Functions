@@ -200,8 +200,7 @@ twoSampleSumStats <- function(data,
                               nontreatcolname = "Not Treated", 
                               scale = 1,
                               parbox = "21cm",
-                              file = 0,
-                              label = 0)
+                              file = 0)
 {
   # need to add a way to order the variables like varname orders them.
   # need to add a version that works for beamer (dropping cmidrule).
@@ -259,9 +258,8 @@ twoSampleSumStats <- function(data,
   tab[row+5] <- paste0("\\end{table} \n")
   
   # print or save table
-  if(file == 0 & label == 0) cat(tab)
-  if(file != 0 & label == 0) cat(tab, file = file)
-  if(file !=0 & label != 0) cat(tab, file = paste0(file, label, ".tex"))
+  if(file == 0) cat(tab)
+  if(file !=0) cat(tab, file = paste0(file, label, ".tex"))
 }
 
 
