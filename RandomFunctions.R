@@ -130,8 +130,8 @@ toc <- function()
 # "Rscript.exe" -e  "knitr::knit2pdf('%.Rnw')" | pdflatex -synctex=1 -interaction=nonstopmode %.tex | txs:///view-pdf
 
 
-####### Add scalebox and fix notes in stargazer ########
-fixStargazer <- function(tab, nmodels, scalesize = .8)
+####### Add scalebox, fix notes, and have variable of interest in stargazer ########
+fixStargazer <- function(tab, nmodels, scalesize = .8, nVarInt = 0)
 {
   # tab should be a character vector of captured output from stargazer
   # this version requires you to use booktabs in your preamble of your tex doc
@@ -145,9 +145,19 @@ fixStargazer <- function(tab, nmodels, scalesize = .8)
   patChar <- paste(" & \\multicolumn{", nmodels, "}{l}{\\parbox", sep = "")
   d <- sub(patChar,  noteChar, b, fixed = TRUE)
 
-  
   # dropping the comment at the top
   d[2:4] <- ""
+  
+  # adding Var of Interest and control designation
+  if(nVarInt == 1 ){
+    d[16] <- sub("\\\\[-2.1ex]", "\\\\[-2.1ex] \\textbf{Variable of Interest:} \\\\", d[16], fixed = TRUE)
+    d[16 + nVarInt*2] <- paste("\\textbf{Control Variables:} \\\\", d[16 + nVarInt*2])
+  }
+  
+  if(nVarInt > 1 ){
+    d[16] <- sub("\\\\[-2.1ex]", "\\\\[-2.1ex] \\textbf{Variables of Interest:} \\\\", d[16], fixed = TRUE)
+    d[16 + nVarInt*2] <- paste("\\textbf{Control Variables:} \\\\", d[16 + nVarInt*2])
+  }
   
   # getting line endings
   a <- gsub("\\\\", "\\\\ \n", d, fixed = TRUE)
