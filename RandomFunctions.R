@@ -131,7 +131,7 @@ toc <- function()
 
 
 ####### Add scalebox, fix notes, and have variable of interest in stargazer ########
-fixStargazer <- function(tab, nmodels, scalesize = .8, nVarInt = 0)
+fixStargazer <- function(tab, nmodels, scalesize = .8, nVarInt = 0, file = 0)
 {
   # tab should be a character vector of captured output from stargazer
   # this version requires you to use booktabs in your preamble of your tex doc
@@ -161,8 +161,11 @@ fixStargazer <- function(tab, nmodels, scalesize = .8, nVarInt = 0)
   
   # getting line endings
   a <- gsub("\\\\", "\\\\ \n", d, fixed = TRUE)
+  
   # printing output (if trunctated, go to RStudiio Options, Code, Display, and set the number at the bottom higher.
-  cat(a)
+  # or printing to a file for auto loading
+  if(file == 0) cat(a)
+  if(file != 0) cat(a, file = file)
 }
 
   
