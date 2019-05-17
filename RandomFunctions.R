@@ -94,7 +94,30 @@ RDcoef <- function(model, digits = 3){
 # To do - 
 # Add other rd packages
 RDse <- function(model, digits = 3){
-  return(round(model$se[1],digits = 3))
+  if(round(model$se[1],digits = 3) > 0) {
+    return(round(model$se[1],digits = 3))
+  } else {
+    return(paste0("<", 1/10^digits))
+  }
+}
+
+# Clean up RD p-values (from rdrobust) for printing 
+# To do - 
+# Add other rd packages
+RDp <- function(model, digits = 3){
+  if(round(model$se[1],digits = 3) > 0) {
+    return(round(model$pv[1],digits = 3))
+  } else {
+    return(paste0("<", 1/10^digits))
+  }
+}
+
+# Clean up RD Effective Sample Size (from rdrobust) for printing 
+# To do - 
+# Add other rd packages
+RDnobs <- function(model){
+  nobs <- model$N_h_l + model$N_h_r
+  return(paste0("\\multicolumn{1}{c}{", format(nobs, big.mark=","), "}"))
 }
 
 ##### Get the mode of a data set #######
