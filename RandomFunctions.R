@@ -7,7 +7,8 @@
               "sandwich",
               "DataExplorer",
               "stringr",
-              "devtools")
+              "devtools",
+              "tidyverse")
 
 # Install CRAN packages (if not already installed)
 .inst <- .packages %in% installed.packages()
@@ -76,7 +77,24 @@ difPr <- function(var1, var2, digits = 3)
 
 # Within R-squared for FELM
 WR2 <- function(model, digits = 3){
-return(round(summary(model)$P.r.squared, digits = digits))
+  return(round(summary(model)$P.r.squared, digits = digits))
+}
+
+# Clean up RD coefficients (from rdrobust) for printing 
+# To do - 
+# Add other rd packages
+RDcoef <- function(model, digits = 3){
+  return(paste0(round(model$Estimate[1], digits = 3),"^{", 
+                if(model$pv[1] < .01){print("***")} 
+                else if(model$pv[1] < .05) {print("**")} 
+                else if(model$pv[1] < .1) {print("*")}, "}"))
+}
+
+# Clean up RD ses (from rdrobust) for printing 
+# To do - 
+# Add other rd packages
+RDse <- function(model, digits = 3){
+  return(round(model$se[1],digits = 3))
 }
 
 ##### Get the mode of a data set #######
