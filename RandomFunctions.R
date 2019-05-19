@@ -84,10 +84,15 @@ WR2 <- function(model, digits = 3){
 # To do - 
 # Add other rd packages
 RDcoef <- function(model, digits = 3){
-  return(paste0(round(model$Estimate[1], digits = 3),"^{", 
-                if(model$pv[1] < .01){print("***")} 
-                else if(model$pv[1] < .05) {print("**")} 
-                else if(model$pv[1] < .1) {print("*")}, "}"))
+  if(model$pv[1] < .01){
+    return(paste0(round(model$Estimate[1], digits = 3),"^{***}"))
+  } else if(model$pv[1] < .05) {
+    return(paste0(round(model$Estimate[1], digits = 3),"^{**}"))
+  } else if(model$pv[1] < .1) {
+    return(paste0(round(model$Estimate[1], digits = 3),"^{*}"))
+  } else {
+    return(paste0(round(model$Estimate[1], digits = 3),"^{}"))
+  }
 }
 
 # Clean up RD ses (from rdrobust) for printing 
