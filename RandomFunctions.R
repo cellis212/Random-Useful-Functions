@@ -100,7 +100,7 @@ RDcoef <- function(model, digits = 3){
 # Add other rd packages
 RDse <- function(model, digits = 3){
   if(round(model$se[1],digits = 3) > 0) {
-    return(paste0("(", round(model$se[1],digits = 3), ")")
+    return(paste0("(", round(model$se[1],digits = 3), ")"))
   } else {
     return(paste0("(<", 1/10^digits, ")"))
   }
