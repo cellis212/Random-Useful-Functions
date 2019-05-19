@@ -125,6 +125,10 @@ RDnobs <- function(model){
   return(paste0("\\multicolumn{1}{c}{", format(nobs, big.mark=","), "}"))
 }
 
+RDbw <- function(model){
+  return(round(model$b_l[1],digits = 3))
+}
+
 ##### Get the mode of a data set #######
 getmode <- function(v) {
   uniqv <- unique(v)
