@@ -121,7 +121,7 @@ RDp <- function(model, digits = 3){
 # To do - 
 # Add other rd packages
 RDnobs <- function(model){
-  nobs <- model$N_h_l + model$N_h_r
+  nobs <- model$Nb[1] + model$Nh[1]
   return(paste0("\\multicolumn{1}{c}{", format(nobs, big.mark=","), "}"))
 }
 
