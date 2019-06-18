@@ -126,7 +126,7 @@ RDnobs <- function(model){
 }
 
 RDbw <- function(model){
-  return(round(model$b_l[1],digits = 3))
+  return(round(model$bws[1],digits = 3))
 }
 
 ##### Get the mode of a data set #######
