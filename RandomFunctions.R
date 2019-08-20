@@ -53,7 +53,7 @@ meanPr <- function(data, digits = 3)
   if(abs(m) < 1000){
     return(formatC(m, digits = digits, format = "f"))
   } else {
-    return(paste0(paste0("multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
+    return(paste0(paste0("\\multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
   }
 }
 
@@ -64,7 +64,7 @@ sdPr <- function(data, digits = 3)
   if(m < 1000){
     return(formatC(m, digits = digits, format = "f"))
   } else {
-    return(paste0(paste0("multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
+    return(paste0(paste0("\\multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
   }
 }
 
@@ -83,7 +83,7 @@ difPr <- function(var1, var2, digits = 3)
   if(abs(m) < 1000){
     return(formatC(m, digits = digits, format = "f"))
   } else {
-    return(paste0(paste0("multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
+    return(paste0(paste0("\\multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
   }
 }
 
