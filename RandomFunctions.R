@@ -50,14 +50,22 @@ felmNest <- function(form, data, ...)
 meanPr <- function(data, digits = 3)
 {
   m <- mean(data, na.rm = TRUE)
-  return(formatC(m, digits = digits, format = "f"))
+  if(abs(m) < 1000){
+    return(formatC(m, digits = digits, format = "f"))
+  } else {
+    return(paste0(paste0("multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
+  }
 }
 
 # Standard Deviation
 sdPr <- function(data, digits = 3)
 {
   m <- sd(data, na.rm = TRUE)
-  return(formatC(m, digits = digits, format = "f"))
+  if(m < 1000){
+    return(formatC(m, digits = digits, format = "f"))
+  } else {
+    return(paste0(paste0("multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
+  }
 }
 
 # T-test for difference in means
@@ -72,7 +80,11 @@ tdif <- function(var1, var2, digits = 3)
 difPr <- function(var1, var2, digits = 3)
 {
   m <- mean(var1, na.rm = TRUE) - mean(var2, na.rm = TRUE)
-  return(formatC(m, digits = digits, format = "f"))
+  if(abs(m) < 1000){
+    return(formatC(m, digits = digits, format = "f"))
+  } else {
+    return(paste0(paste0("multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
+  }
 }
 
 # Within R-squared for FELM
@@ -243,6 +255,7 @@ twoSampleSumStats <- function(data,
                               treatvar, 
                               varnames, 
                               fancyvarnames, 
+                              basicPlot = FALSE,
                               caption = "", 
                               label = "", 
                               note = "", 
@@ -306,6 +319,11 @@ twoSampleSumStats <- function(data,
   }
   tab[row+4] <- paste0("\\end{tabular}} \n")
   tab[row+5] <- paste0("\\end{table} \n")
+  
+  
+  if(basicPlot == TRUE) {
+    tab <- tab[10:(length(tab)-3)]
+  }
   
   # print or save table
   if(file == 0) cat(tab)
