@@ -69,21 +69,11 @@ sdPr <- function(data, digits = 3)
 }
 
 # T-test for difference in means
-tdif <- function(var1, var2, digits = 3, cluster = "none")
+tdif <- function(var1, var2, digits = 3)
 {
   # Come back and add stars
-  if(cluster == "none"){
-    m <- t.test(var1, var2)
-    return(formatC(m$statistic, digits = digits, format = "f"))
-  } else {
-    require(lfe)
-    temp1 <- cbind(var1, 1)
-    temp2 <- cbind(var2, 0)
-    temp <- rbind(temp1, temp2)
-    temp <- cbind(temp, cluster)
-    mod <- felm(var1 ~ v2 | 0 | 0 | cluster, data = temp)
-    return(mod$ctval[2])
-  }
+  m <- t.test(var1, var2)
+  return(formatC(m$statistic, digits = digits, format = "f"))
 }
 
 # Difference in means
@@ -273,7 +263,6 @@ twoSampleSumStats <- function(data,
                               nontreatcolname = "Not Treated", 
                               scale = 1,
                               parbox = "21cm",
-                              cluster = "none",
                               file = 0)
 {
   # need to add a way to order the variables like varname orders them.
@@ -314,7 +303,7 @@ twoSampleSumStats <- function(data,
     ntm <- meanPr(nontreatdata[[i]])
     nts <- sdPr(nontreatdata[[i]])
     d   <- difPr(treatdata[[i]], nontreatdata[[i]])
-    dm  <- tdif(treatdata[[i]], nontreatdata[[i]], cluster)
+    dm  <- tdif(treatdata[[i]], nontreatdata[[i]])
     
     row <- row + 1
     tab[row] <- paste(fancyvarnames[i],"&",fm,"&",fs,"&",tm,"&",ts,"&",ntm,"&",nts,"&",d,"&", dm,"\\\\ \n")
