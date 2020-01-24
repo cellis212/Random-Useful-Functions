@@ -69,11 +69,21 @@ sdPr <- function(data, digits = 3)
 }
 
 # T-test for difference in means
-tdif <- function(var1, var2, digits = 3)
+tdif <- function(var1, var2, digits = 3, cluster = "none")
 {
   # Come back and add stars
-  m <- t.test(var1, var2)
-  return(formatC(m$statistic, digits = digits, format = "f"))
+  if(cluster == "none"){
+    m <- t.test(var1, var2)
+    return(formatC(m$statistic, digits = digits, format = "f"))
+  } else {
+    require(lfe)
+    temp1 <- cbind(var1, 1)
+    temp2 <- cbind(var2, 0)
+    temp <- rbind(temp1, temp2)
+    temp <- cbind(temp, cluster)
+    mod <- felm(var1 ~ v2 | 0 | 0 | cluster, data = temp)
+    return(formatC(mod$ctval[2], digits = digits, format = "f"))
+  }
 }
 
 # Difference in means
@@ -206,7 +216,7 @@ fixStargazer <- function(tab, nmodels, scalesize = .8, nVarInt = 0, file = 0, la
   noteChar <- paste("\\multicolumn{", nmodels + 1, "}{l}{\\parbox", sep = "")
   patChar <- paste(" & \\multicolumn{", nmodels, "}{l}{\\parbox", sep = "")
   d <- sub(patChar,  noteChar, b, fixed = TRUE)
-
+  
   # dropping the comment at the top
   d[2:4] <- ""
   
@@ -231,7 +241,7 @@ fixStargazer <- function(tab, nmodels, scalesize = .8, nVarInt = 0, file = 0, la
   if(file !=0 & label != 0) cat(a, file = paste0(file, label, ".tex"))
 }
 
-  
+
 #### Fix the weird unlabeled dataset problem ####
 # This is also fixed by loading the packages in the order from the master file
 # The problem occurs when you load HMisc and tidyverse in the wrong order
@@ -263,6 +273,7 @@ twoSampleSumStats <- function(data,
                               nontreatcolname = "Not Treated", 
                               scale = 1,
                               parbox = "21cm",
+                              cluster = "none",
                               file = 0)
 {
   # need to add a way to order the variables like varname orders them.
@@ -303,7 +314,7 @@ twoSampleSumStats <- function(data,
     ntm <- meanPr(nontreatdata[[i]])
     nts <- sdPr(nontreatdata[[i]])
     d   <- difPr(treatdata[[i]], nontreatdata[[i]])
-    dm  <- tdif(treatdata[[i]], nontreatdata[[i]])
+    dm  <- tdif(treatdata[[i]], nontreatdata[[i]], cluster)
     
     row <- row + 1
     tab[row] <- paste(fancyvarnames[i],"&",fm,"&",fs,"&",tm,"&",ts,"&",ntm,"&",nts,"&",d,"&", dm,"\\\\ \n")
