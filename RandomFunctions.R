@@ -82,7 +82,7 @@ tdif <- function(var1, var2, digits = 3, cluster = "none")
     temp <- rbind(temp1, temp2)
     temp <- cbind(temp, cluster)
     mod <- felm(var1 ~ v2 | 0 | 0 | cluster, data = temp)
-    return(formatC(as.numeric(mod$ctval[2]), digits = digits, format = "f"))
+    return(mod$ctval[2])
   }
 }
 
