@@ -120,29 +120,33 @@ aaniv <- function(form1,
 }
 
 # Bootstrap diff-in-coefficients test
-cdifboot <- function(func1, # Function that inputs data and returns a coefficient
-                     func2, # Function that inputs data and returns a coefficient
+cdifboot <- function(g, # Function that inputs data and returns a coefficient
                      data,
+                     cutVar, # character variable that defines subset
                      cvar, # cluster id variable
-                     nboot = 100)
+                     nboot = 100,
+                     seed = 42)
 {
+  set.seed(seed)
   ests <- matrix(0,
                  nrow = nboot,
                  ncol = 2) 
-  for(b in 1:nboot){
-  if(b > 1){
-    cInd <- sample(unique(cvar), length(unique(cvar)), replace = TRUE)
-    tInd <- c()
-    for(t in 1:length(cInd)){
-      tInd <- c(tInd, which(cvar == cInd[t]))
-    }
-    dataB <- data[tInd,]
-  } else {
-    dataB <- data
-  }
+  cutCol <- which(colnames(data) == cutVar) 
   
-  ests[b,1] <- func1(dataB)
-  ests[b,2] <- func2(dataB)
+  for(b in 1:nboot){
+    if(b > 1){
+      cInd <- sample(unique(cvar), length(unique(cvar)), replace = TRUE)
+      tInd <- c()
+      for(t in 1:length(cInd)){
+        tInd <- c(tInd, which(cvar == cInd[t]))
+      }
+      dataB <- data[tInd,]
+    } else {
+      dataB <- data
+    }
+    
+    ests[b,1] <- g(dataB[dataB[,cutCol] == 0,])
+    ests[b,2] <- g(dataB[dataB[,cutCol] == 1,])
   }
   
   dif <- ests[1,1] - ests[1,2]
