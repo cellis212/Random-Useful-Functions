@@ -68,6 +68,89 @@ sdPr <- function(data, digits = 3)
   }
 }
 
+# Andrews and Armstrong (2017) unbiased IV for exactly identified models=
+aaniv <- function(form1,
+                  form2,
+                  data,
+                  cvar,
+                  nboot = 100)
+{
+  # Required Packages
+  require(lfe)
+  
+  ests <- matrix(0,
+                 nrow = nboot,
+                 ncol = 2)
+  
+  for(b in 1:nboot){
+    # Block Bootstrapping
+    if(b > 1){
+      cInd <- sample(unique(cvar), length(unique(cvar)), replace = TRUE)
+      tInd <- c()
+      for(t in 1:length(cInd)){
+        tInd <- c(tInd, which(cvar == cInd[t]))
+      }
+      dataB <- data[tInd,]
+    } else {
+      dataB <- data
+    }
+    
+    mod <- felm(form1, dataB)
+    ests[b,1] <- mod$coefficients[1]
+    
+    mod <- felm(form2, dataB)
+    ests[b,2] <- mod$coefficients[1]
+  }
+  
+  vc <- matrix(c(var(ests[2:nboot,1]), 
+                 cov(ests[2:nboot,1], ests[2:nboot,2]),
+                 cov(ests[2:nboot,1], ests[2:nboot,2]),
+                 var(ests[2:nboot,2])),
+               nrow = 2,
+               ncol = 2)
+  
+  bu <- 1/(vc[2,2]^.5) * 
+    (1 - pnorm(ests[1,2]/(vc[2,2]^.5))) / dnorm(ests[1,2]/(vc[2,2]^.5)) * 
+    (ests[1,1] - vc[1,2]/vc[2,2] * ests[1,2]) +
+    vc[1,2]/vc[2,2]
+  
+  return(list("bu" = bu,
+              "ests" = ests,
+              "vc" = vc))
+}
+
+# Bootstrap diff-in-coefficients test
+cdifboot <- function(func1, # Function that inputs data and returns a coefficient
+                     func2, # Function that inputs data and returns a coefficient
+                     data,
+                     cvar, # cluster id variable
+                     nboot = 100)
+{
+  ests <- matrix(0,
+                 nrow = nboot,
+                 ncol = 2) 
+  for(b in 1:nboot){
+  if(b > 1){
+    cInd <- sample(unique(cvar), length(unique(cvar)), replace = TRUE)
+    tInd <- c()
+    for(t in 1:length(cInd)){
+      tInd <- c(tInd, which(cvar == cInd[t]))
+    }
+    dataB <- data[tInd,]
+  } else {
+    dataB <- data
+  }
+  
+  ests[b,1] <- func1(dataB)
+  ests[b,2] <- func2(dataB)
+  }
+  
+  dif <- ests[1,1] - ests[1,2]
+  varDif <- var(ests[2:nboot, 1]) + var(ests[2:nboot, 2]) - 2 * cov(ests[2:nboot, 1], ests[2:nboot, 2])
+  
+  return(2*pnorm(-abs(dif/(varDif)^.5)))
+}
+
 # T-test for difference in means
 tdif <- function(var1, var2, digits = 3)
 {
