@@ -47,12 +47,12 @@ felmNest <- function(form, data, ...)
 
 ####### Rounding for table creation #######
 # Mean
-meanPr <- function(data, digits = 3)
+meanPr <- function(data, digits = 3, comma = TRUE)
 {
   m <- mean(data, na.rm = TRUE)
   if(abs(m) < 1000){
     return(formatC(m, digits = digits, format = "f"))
-  } else {
+  } else if(comma == TRUE){
     return(paste0(paste0("\\multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
   }
 }
