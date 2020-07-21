@@ -50,9 +50,10 @@ felmNest <- function(form, data, ...)
 meanPr <- function(data, digits = 3, comma = TRUE)
 {
   m <- mean(data, na.rm = TRUE)
-  if(abs(m) < 1000){
+  if(abs(m) < 1000 |
+     comma == FALSE){
     return(formatC(m, digits = digits, format = "f"))
-  } else if(comma == TRUE){
+  } else {
     return(paste0(paste0("\\multicolumn{2}{", formatC(m, digits = 0, format = "f")), "}"))
   }
 }
